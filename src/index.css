@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* One refined grotesk family carries the whole site -- headlines are
+     just a heavier cut of the same face, not a separate display font.
+     Minimal fashion brands (COS, Arket, Everlane) tend to run one
+     typeface rather than pairing a loud display face with body text. */
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Still brand palette -- a quiet, warm neutral studio palette: soft
+     charcoal (not true black), bone/paper off-whites, a muted warm
+     "stone" for quiet accents, and a single understated clay accent used
+     sparingly (never as a loud badge fill). Replaces this project's
+     earlier hazard-red/caution-yellow streetwear palette -- see CLAUDE.md
+     for why. Deliberately distinct from every sibling demo's warm
+     earth-tone palette. No hardcoded hex values outside this token block. */
+  --color-char: #1c1b18;
+  --color-char-deep: #000000;
+  --color-stone: #8c8578;
+  --color-stone-deep: #6f6858;
+  --color-bone: #efece4;
+  --color-paper: #f8f6f1;
+  --color-clay: #a8674f;
+  --color-slate: #68665d;
+  --color-ink: #19180f;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::selection {
+  background: var(--color-bone);
+  color: var(--color-stone-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-stone-deep);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@layer components {
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    padding: 0.8rem 1.75rem;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  }
+  .btn:active,
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+  .btn-primary {
+    background: var(--color-char);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-char-deep);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-char);
+    border: 1px solid color-mix(in srgb, var(--color-char) 30%, transparent);
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-char);
+    background: color-mix(in srgb, var(--color-char) 5%, transparent);
+  }
+  .nav-link {
+    position: relative;
+    padding-bottom: 0.25rem;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--color-stone-deep);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+  }
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-stone-deep);
+  }
+  /* Quiet text-only tag, not a loud colored pill -- minimal fashion
+     brands tend to understate "New"/"Bestseller" labels rather than
+     badge them like a sale sticker. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-clay);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-transition {
+  animation: page-in 320ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}
